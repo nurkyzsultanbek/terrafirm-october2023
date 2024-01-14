@@ -34,10 +34,6 @@ variable subnet2_cidr {
   description = "provide cidr block for subnet 2"
 }
 
-variable subnet2_name {
-  type        = string
-  default     = "subnet2"
-  description = "provide subnet 2 name"
 }
 
 variable subnet3_cidr {

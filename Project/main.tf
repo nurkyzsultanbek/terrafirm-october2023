@@ -117,6 +117,8 @@ data "aws_ami" "ubuntu" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
+
+  owners = ["099720109477"] # Canonical
 }
 
 resource "aws_instance" "web" {
@@ -126,7 +128,19 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = [aws_security_group.allow_tls.id]
   key_name = aws_key_pair.deployer.key_name
   count = 1
+  # user_data = file("/home/ec2-user/terrafirm-october2023/project/script.sh")
   tags = {
     Name = var.ec2_name
+  }
+}
+
+resource "null_resource" "install_nagios" {
+
+  # Connection details for SSH
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("~/.ssh/id_rsa") # Use the private key here
+    host        = aws_instance.web.public_ip
   }
 }
