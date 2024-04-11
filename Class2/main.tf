@@ -20,7 +20,7 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = [aws_security_group.allow_tls.id]
   #key_name = aws_key_pair.deployer.key_name
   user_data = file("apache.sh")
-  count = "3"
+  count = "1"
 
   tags = local.common_tags
 }
